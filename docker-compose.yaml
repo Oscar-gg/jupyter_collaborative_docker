@@ -1,0 +1,20 @@
+services:
+  jupyter:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: jupyter_lab/collaborative
+    tty: true
+    user: 1000:1000
+    ports:
+      - "8888:8888"
+    volumes:
+      - notebooks:/home/jupyter/jupyter
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+      - token=${token}
+    command: [ "jupyter lab --no-browser --ip=0.0.0.0 --allow-root --NotebookApp.token=${token}" ]
+
+volumes:
+  notebooks:
+    external: false
